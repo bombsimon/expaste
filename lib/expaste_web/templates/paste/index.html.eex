@@ -1,0 +1,6 @@
+<form action="/paste" method="post">
+  <input type="hidden" name="_csrf_token" value="<%= Plug.CSRFProtection.get_csrf_token %>">
+  <textarea class="form-control" name="content" style="width: 100%; height: 500px;"></textarea>
+
+  <button type="submit" class="btn btn-lg btn-primary">Save</button>
+</form>
