@@ -23,7 +23,7 @@ defmodule ExpasteWeb.PasteController do
         cnt
       end
 
-    render conn, "show.html", content: content, layout: {ExpasteWeb.LayoutView, "paste.html"}
+    render conn, "show.html", content: content
   end
 
   def save(conn, %{"content" => content} = params) do

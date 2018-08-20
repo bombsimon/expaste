@@ -14,12 +14,10 @@
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
+        <div style="padding: 20px;">
+          <i class="fa fa-clipboard" style="font-size: 42px;"></i>
+          <span style="font-size: 42px; margin-left: 40px;"><strong>ExPaste</strong> - paste with Elixir and Phoenix</span>
+        </div>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
