@@ -54,7 +54,20 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("paste", {})
+let content = $('textarea')
+
+content.on('keyup', event => {
+  console.log('pushing?' + content.val())
+  channel.push('message:new', {content: content.val()})
+});
+
+channel.on('message:new', payload => {
+  console.log("Reading")
+
+  $('textarea').val(`${payload.content}`)
+});
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
