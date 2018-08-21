@@ -1,5 +1,5 @@
 <ul>
 <%= for p <- @pastes do %>
-  <li><a href="paste/<%= p %>"><%= p %></a></li>
+  <li><a href="/paste/<%= p %>"><%= p %></a></li>
 <% end %>
 </ul>

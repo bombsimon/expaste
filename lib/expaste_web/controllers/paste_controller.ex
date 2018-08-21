@@ -6,7 +6,7 @@ defmodule ExpasteWeb.PasteController do
   end
 
   def latest(conn, _params) do
-    {ok, files} = File.ls("./pastes")
+    {_, files} = File.ls("./pastes")
 
     render conn, "latest.html", pastes: files 
   end
@@ -18,7 +18,28 @@ defmodule ExpasteWeb.PasteController do
 
     content = 
       if res == :error do
-        "Paste not found!"
+        "
+// .---------------------------------.
+// |  .---------------------------.  |
+// |[]|                           |[]|
+// |  |                           |  |
+// |  |      PASTE NOT FOUND!     |  |
+// |  |                           |  |
+// |  |            :(             |  |
+// |  |                           |  |
+// |  |                           |  |
+// |  |                           |  |
+// |  |                           |  |
+// |  `---------------------------'  |
+// |      __________________ _____   |
+// |     |   ___            |     |  |
+// |     |  |   |           |     |  |
+// |     |  |   |           |     |  |
+// |     |  |   |           |     |  |
+// |     |  |___|           |     |  |
+// \\_____|__________________|_____|__|
+
+"
       else
         cnt
       end
@@ -26,16 +47,25 @@ defmodule ExpasteWeb.PasteController do
     render conn, "show.html", content: content
   end
 
-  def save(conn, %{"content" => content} = params) do
-    filename = random_string(10)
-    file_path = Path.join("./pastes", filename)
+  def save(conn, %{"content" => content}) do
+    case content do
+      x when x == "" ->
+        conn
+        |> put_flash(:error, "You need to enter some text!")
+        |> redirect(to: "/")
+      _ ->
+        filename = random_string(10)
+        file_path = Path.join("./pastes", filename)
 
-    {ok, file} = File.open file_path, [:write]
-    IO.binwrite file, content
+        {_, file} = File.open file_path, [:write]
+        IO.binwrite file, content
 
-    File.close file
+        File.close file
 
-    redirect conn, to: "/paste/" <> filename
+        conn
+        |> put_flash(:info, "Paste stored successfully!")
+        |> redirect(to: "/paste/" <> filename)
+    end
   end
 
   def random_string(length) do

@@ -54,7 +54,7 @@ exports.config = {
     sass: {
       mode: 'native',
       options: {
-        includePaths: ["node_modules/font-awesome/scss", "node_modules/bootstrap/scss"], // Tell sass-brunch where to look for files to @import
+        includePaths: ["node_modules/font-awesome/scss"], // Tell sass-brunch where to look for files to @import
         precision: 8 // Minimum precision required by bootstrap-sass
       }
     },
@@ -75,10 +75,7 @@ exports.config = {
     enabled: true,
     globals: { // Bootstrap's JavaScript requires both '$' and 'jQuery' in global scope
       $: 'jquery',
-      jQuery: 'jquery',
-      Tether: 'tether',
-      Popper: 'popper.js',
-      bootstrap: 'bootstrap', // Require Bootstrap's JavaScript globally
+      jQuery: 'jquery'
     }
   },
 };
