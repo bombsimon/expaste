@@ -56,16 +56,21 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("paste", {})
 let content = $('textarea')
+let session = $('#session')
 
 content.on('keyup', event => {
-  console.log('pushing?' + content.val())
-  channel.push('message:new', {content: content.val()})
+  channel.push('message:new', {
+    content: content.val(),
+    session: session.val()
+  })
 });
 
 channel.on('message:new', payload => {
-  console.log("Reading")
+  var currentSession = getQueryParam('l')
 
-  $('textarea').val(`${payload.content}`)
+  if ( `${payload.session}` == currentSession ) {
+    $('pre').html(PR.prettyPrintOne(`${payload.content}`, '', true))
+  }
 });
 
 channel.join()
@@ -73,3 +78,26 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 export default socket
+
+
+function getQueryParam(name, url) {
+  if (!url) {
+    url = window.location.href;
+  }
+
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+
+  if (!results) {
+    return null;
+  }
+
+  if (!results[2]) {
+    return '';
+  }
+
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+// vim: set ts=2 sw=2 et:

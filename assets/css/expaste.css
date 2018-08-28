@@ -1,0 +1,74 @@
+ /* Use full height */
+html, body {
+  height: 95%;
+  min-height: 400px;
+}
+
+/* Space out content a bit */
+body, form, ul, table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.title {
+  font-size: 42px;
+  margin-left: 40px;
+  display: none;
+}
+
+.header {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.text-wrapper > textarea {
+  min-height: 400px;
+  box-sizing: border-box;         /* For IE and modern versions of Chrome */
+  -moz-box-sizing: border-box;    /* For Firefox                          */
+  -webkit-box-sizing: border-box; /* For Safari                           */
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    height: 100%;
+  }
+
+  .title {
+    display: inline-block;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    display: none;
+  }
+}
+
+/* vim: set sw=2 ts=2 et: */

@@ -6,7 +6,7 @@ defmodule Expaste.PasteChannel do
   end
 
   def handle_in("message:new", payload, socket) do
-    broadcast! socket, "message:new", %{content: payload["content"]}
+    broadcast! socket, "message:new", payload
 
     {:noreply, socket}
   end
