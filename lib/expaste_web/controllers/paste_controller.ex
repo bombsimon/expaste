@@ -1,6 +1,5 @@
 defmodule ExpasteWeb.PasteController do
   use ExpasteWeb, :controller
-  import Expaste
 
   @paste_directory "./pastes"
 
@@ -22,7 +21,7 @@ defmodule ExpasteWeb.PasteController do
 
     conn
     |> put_flash(:info, message)
-    |> render template, filename: filename, disabled: disabled, content: ""
+    |> render(template, filename: filename, disabled: disabled, content: "")
   end
 
   def latest(conn, _params) do
