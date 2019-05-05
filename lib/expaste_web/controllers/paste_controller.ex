@@ -2,6 +2,8 @@ defmodule ExpasteWeb.PasteController do
   use ExpasteWeb, :controller
   import Expaste
 
+  @paste_directory "./pastes"
+
   def index(conn, params) do
     filename = Expaste.random_string(10)
 
@@ -12,46 +14,31 @@ defmodule ExpasteWeb.PasteController do
         {"index.html", ""}
       end
 
+    disabled = if File.exists?(@paste_directory) do
+      ""
+    else
+      "disabled"
+    end
+
     conn
     |> put_flash(:info, message)
-    |> render template, filename: filename, content: ""
+    |> render template, filename: filename, disabled: disabled, content: ""
   end
 
   def latest(conn, _params) do
-    {_, files} = File.ls("./pastes")
+    {_, files} = File.ls(@paste_directory)
 
     render conn, "latest.html", pastes: files
   end
 
   def show(conn, %{"id" => id}) do
-    file_path = Path.join("./pastes", id)
+    file_path = Path.join(@paste_directory, id)
 
     {res, cnt} = File.read file_path
 
     content =
       if res == :error do
-        "
-// .---------------------------------.
-// |  .---------------------------.  |
-// |[]|                           |[]|
-// |  |                           |  |
-// |  |      PASTE NOT FOUND!     |  |
-// |  |                           |  |
-// |  |            :(             |  |
-// |  |                           |  |
-// |  |                           |  |
-// |  |                           |  |
-// |  |                           |  |
-// |  `---------------------------'  |
-// |      __________________ _____   |
-// |     |   ___            |     |  |
-// |     |  |   |           |     |  |
-// |     |  |   |           |     |  |
-// |     |  |   |           |     |  |
-// |     |  |___|           |     |  |
-// \\_____|__________________|_____|__|
-
-"
+        Expaste.not_found_text()
       else
         cnt
       end
@@ -73,7 +60,7 @@ defmodule ExpasteWeb.PasteController do
             filename
           end
 
-        file_path = Path.join("./pastes", filename)
+        file_path = Path.join(@paste_directory, filename)
 
         {_, file} = File.open file_path, [:write]
         IO.binwrite file, content

@@ -1,3 +1,7 @@
 <pre class="prettyprint linenums">
 <%= @content %>
 </pre>
+
+<a href="/">
+  <button type="submit" class="btn btn-sm btn-primary">Create new paste</button>
+</a>
