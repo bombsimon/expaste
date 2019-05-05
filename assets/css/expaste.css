@@ -1,4 +1,4 @@
- /* Use full height */
+/* Use full height */
 html, body {
   height: 95%;
   min-height: 400px;
@@ -69,6 +69,11 @@ body, form, ul, table {
   .title {
     display: none;
   }
+}
+
+/* Paste preview */
+pre.prettyprint {
+  border-radius: .25rem;
 }
 
 /* vim: set sw=2 ts=2 et: */
